@@ -1,23 +1,7 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:16-alpine
-    container_name: cosre-postgres
-    environment:
-      POSTGRES_DB: collabsphere_dev
-      POSTGRES_USER: cosre_admin
-      POSTGRES_PASSWORD: dev123456
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - cosre-network
-    restart: unless-stopped
-
-  # Redis Cache
+  # Redis Cache - Chỉ dùng Docker cho Redis
   redis:
     image: redis:7-alpine
     container_name: cosre-redis
@@ -28,23 +12,32 @@ services:
     networks:
       - cosre-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
-  # pgAdmin (Database GUI)
+  # pgAdmin - Optional (Web-based PostgreSQL GUI)
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: cosre-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@collabsphere.com
       PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
     ports:
       - "5050:80"
     networks:
       - cosre-network
     restart: unless-stopped
+    depends_on:
+      - redis
 
 volumes:
-  postgres-data:
   redis-data:
+    driver: local
 
 networks:
   cosre-network:
