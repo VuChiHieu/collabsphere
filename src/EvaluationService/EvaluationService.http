@@ -1,0 +1,6 @@
+@EvaluationService_HostAddress = http://localhost:5177
+
+GET {{EvaluationService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
