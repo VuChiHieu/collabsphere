@@ -143,10 +143,10 @@ Host=localhost;Port=5432;Database=collabsphere_dev;Username=cosre_admin;Password
 
 ## 👥 Team Members
 
-* **Vũ Chí Hiếu** - DevOps & Infrastructure
-* **Hà Ngọc Hiếu** - BA & Documentation
-* **Nguyễn Thúc Gia Khôi** - Backend Architect
-* **Phạm Nhật Huy** - Frontend & DevOps
+* **Vũ Chí Hiếu**
+* **Hà Ngọc Hiếu**
+* **Nguyễn Thúc Gia Khôi**
+* **Phạm Nhật Huy**
 
 ## 📚 Documentation
 
@@ -157,30 +157,48 @@ Host=localhost;Port=5432;Database=collabsphere_dev;Username=cosre_admin;Password
 ## 🔧 Tech Stack
 
 ### Backend
-
-* ASP.NET Core 9.0
-* PostgreSQL 17
-* Redis
-* SignalR
-* WebRTC
+- ASP.NET Core 9.0
+- Entity Framework Core 9
+- PostgreSQL 17
+- Redis 7 (Local) / Upstash Redis (Production)
+- SignalR (Real-time Chat)
+- WebRTC (Video Conferencing)
 
 ### Frontend
+- React 18
+- Vite 5
+- TypeScript
+- Material-UI / Tailwind CSS
+- Redux Toolkit / Zustand
 
-* React 18
-* Vite
-* TypeScript
-* Tailwind CSS / MUI
-
-### Cloud
-
-* Azure (Backend)
-* AWS (Frontend + Bedrock)
-* Cloudinary
+### Cloud Services
+- **Cloudinary:** Media storage (images, videos, files)
+- **Upstash Redis:** Production cache & sessions
+- **Render.com:** Backend hosting (microservices)
+- **Vercel:** Frontend hosting & CDN
+- **Gemini API:** AI chatbot & generation
+- **Render PostgreSQL:** Production database
 
 ### DevOps
+- Docker & Docker Compose
+- GitHub Actions (CI/CD)
+- GitHub (Version Control)
 
-* Docker
-* GitHub Actions
+---
+
+## ☁️ Cloud Services (Updated)
+
+**Note:** We use Render.com and Vercel instead of Azure/AWS due to student account limitations.
+
+| Service | Provider | Purpose | Deployment |
+|---------|----------|---------|------------|
+| Media Storage | Cloudinary | Files, images | ✅ Active |
+| Cache | Upstash Redis | Sessions, rate limit | ✅ Active |
+| Backend | Render.com | Microservices | Sprint 8 |
+| Frontend | Vercel | Static hosting | Sprint 8 |
+| AI | Gemini | Chatbot | Sprint 6 |
+
+All alternatives approved by course instructor.
 
 ## 📋 Development Guidelines
 
