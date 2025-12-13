@@ -1,41 +1,101 @@
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// ==================== ADD OCELOT CONFIGURATION ====================
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Services.AddOcelot(builder.Configuration);
+
+// ==================== ADD AUTHENTICATION ====================
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"] ?? "YourSuperSecretKeyForCollabSphere2024!@#";
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"] ?? "CollabSphere",
+            ValidAudience = jwtSettings["Audience"] ?? "CollabSphereUsers",
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(secretKey)
+            ),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+// ==================== ADD CORS ====================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
+// ==================== ADD HEALTH CHECKS ====================
+builder.Services.AddHealthChecks();
+
+// ==================== ADD LOGGING ====================
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ==================== CONFIGURE MIDDLEWARE ====================
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseDeveloperExceptionPage();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("AllowReactApp");
+app.UseAuthentication();
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+// ==================== MAP ENDPOINTS FOR GATEWAY ITSELF ====================
+// Chỉ xử lý root path và /health, còn lại để Ocelot handle
+app.MapWhen(
+    context => context.Request.Path == "/" || context.Request.Path == "/health",
+    appBuilder =>
+    {
+        appBuilder.UseRouting();
+        appBuilder.UseEndpoints(endpoints =>
+        {
+            // Root endpoint
+            endpoints.MapGet("/", () => Results.Ok(new
+            {
+                service = "CollabSphere API Gateway",
+                version = "1.0.0",
+                status = "Running",
+                timestamp = DateTime.UtcNow,
+                routes = new[]
+                {
+                    "/api/auth/*",
+                    "/api/users/*",
+                    "/api/classes/*",
+                    "/api/projects/*",
+                    "/api/teams/*"
+                }
+            }));
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+            // Health check
+            endpoints.MapHealthChecks("/health");
+        });
+    }
+);
+
+// ==================== OCELOT (Handle tất cả /api/* requests) ====================
+await app.UseOcelot();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
