@@ -38,6 +38,7 @@ public class Task : BaseEntity
     [ForeignKey("CardId")]
     public virtual Card Card { get; set; } = null!;
 
-    public virtual ICollection<Task> Subtasks { get; set; } = new List<Task>();
+    public virtual ICollection<Subtask> Subtasks { get; set; } = new List<Subtask>();
+    
     public virtual ICollection<TaskAssignment> TaskAssignments { get; set; } = new List<TaskAssignment>();
 }
