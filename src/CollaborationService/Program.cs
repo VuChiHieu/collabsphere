@@ -33,7 +33,7 @@ var connectionString = builder.Environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("DefaultConnection")
     : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 
-builder.Services.AddDbContext(options =>
+builder.Services.AddDbContext<CollaborationServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
     {
         npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null);
@@ -49,7 +49,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService();
+    var dbContext = scope.ServiceProvider.GetRequiredService<CollaborationServiceDbContext>();
     await dbContext.Database.MigrateAsync();
 }
 

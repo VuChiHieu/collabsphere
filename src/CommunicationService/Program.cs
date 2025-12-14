@@ -33,7 +33,8 @@ var connectionString = builder.Environment.IsDevelopment()
     ? builder.Configuration.GetConnectionString("DefaultConnection")
     : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 
-builder.Services.AddDbContext(options =>
+// LỖI ĐÃ SỬA 1: Thêm tên DbContext
+builder.Services.AddDbContext<CommunicationServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
     {
         npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null);
@@ -49,7 +50,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService();
+    // LỖI ĐÃ SỬA 2: Thêm tên DbContext
+    var dbContext = scope.ServiceProvider.GetRequiredService<CommunicationServiceDbContext>();
     await dbContext.Database.MigrateAsync();
 }
 

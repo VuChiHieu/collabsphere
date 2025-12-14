@@ -37,7 +37,7 @@ var connectionString = builder.Environment.IsDevelopment()
     : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
 
 // Add DbContext
-builder.Services.AddDbContext(options =>
+builder.Services.AddDbContext<UserServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
     {
         npgsqlOptions.EnableRetryOnFailure(
@@ -58,7 +58,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService();
+    var dbContext = scope.ServiceProvider.GetRequiredService<UserServiceDbContext>();
     await dbContext.Database.MigrateAsync();
 }
 
