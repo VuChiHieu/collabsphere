@@ -17,6 +17,7 @@ namespace AcademicService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("academicservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -109,7 +110,7 @@ namespace AcademicService.Migrations
 
                     b.HasIndex("Semester", "AcademicYear");
 
-                    b.ToTable("classes", (string)null);
+                    b.ToTable("classes", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.ClassLecturer", b =>
@@ -159,7 +160,7 @@ namespace AcademicService.Migrations
                     b.HasIndex("ClassId", "LecturerId")
                         .IsUnique();
 
-                    b.ToTable("class_lecturers", (string)null);
+                    b.ToTable("class_lecturers", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.ClassScheduleSlot", b =>
@@ -219,7 +220,7 @@ namespace AcademicService.Migrations
                     b.HasIndex("ClassId", "SlotNumber")
                         .IsUnique();
 
-                    b.ToTable("class_schedule_slots", (string)null);
+                    b.ToTable("class_schedule_slots", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.ClassStudent", b =>
@@ -275,7 +276,7 @@ namespace AcademicService.Migrations
                     b.HasIndex("ClassId", "StudentId")
                         .IsUnique();
 
-                    b.ToTable("class_students", (string)null);
+                    b.ToTable("class_students", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.Subject", b =>
@@ -341,7 +342,7 @@ namespace AcademicService.Migrations
                     b.HasIndex("SubjectCode")
                         .IsUnique();
 
-                    b.ToTable("subjects", (string)null);
+                    b.ToTable("subjects", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.Syllabus", b =>
@@ -433,7 +434,7 @@ namespace AcademicService.Migrations
 
                     b.HasIndex("Semester", "AcademicYear");
 
-                    b.ToTable("syllabi", (string)null);
+                    b.ToTable("syllabi", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.SyllabusWeek", b =>
@@ -486,7 +487,7 @@ namespace AcademicService.Migrations
                     b.HasIndex("SyllabusId", "WeekNumber")
                         .IsUnique();
 
-                    b.ToTable("syllabus_weeks", (string)null);
+                    b.ToTable("syllabus_weeks", "academicservice");
                 });
 
             modelBuilder.Entity("AcademicService.Models.Entities.Class", b =>

@@ -11,8 +11,12 @@ namespace FileService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "fileservice");
+
             migrationBuilder.CreateTable(
                 name: "resources",
+                schema: "fileservice",
                 columns: table => new
                 {
                     ResourceId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -42,6 +46,7 @@ namespace FileService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "shared_documents",
+                schema: "fileservice",
                 columns: table => new
                 {
                     DocumentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -67,6 +72,7 @@ namespace FileService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "resource_accesses",
+                schema: "fileservice",
                 columns: table => new
                 {
                     AccessId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -85,6 +91,7 @@ namespace FileService.Migrations
                     table.ForeignKey(
                         name: "FK_resource_accesses_resources_ResourceId",
                         column: x => x.ResourceId,
+                        principalSchema: "fileservice",
                         principalTable: "resources",
                         principalColumn: "ResourceId",
                         onDelete: ReferentialAction.Cascade);
@@ -92,6 +99,7 @@ namespace FileService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "resource_versions",
+                schema: "fileservice",
                 columns: table => new
                 {
                     VersionId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -111,6 +119,7 @@ namespace FileService.Migrations
                     table.ForeignKey(
                         name: "FK_resource_versions_resources_ResourceId",
                         column: x => x.ResourceId,
+                        principalSchema: "fileservice",
                         principalTable: "resources",
                         principalColumn: "ResourceId",
                         onDelete: ReferentialAction.Cascade);
@@ -118,6 +127,7 @@ namespace FileService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "document_collaborators",
+                schema: "fileservice",
                 columns: table => new
                 {
                     CollaboratorId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -135,6 +145,7 @@ namespace FileService.Migrations
                     table.ForeignKey(
                         name: "FK_document_collaborators_shared_documents_DocumentId",
                         column: x => x.DocumentId,
+                        principalSchema: "fileservice",
                         principalTable: "shared_documents",
                         principalColumn: "DocumentId",
                         onDelete: ReferentialAction.Cascade);
@@ -142,98 +153,117 @@ namespace FileService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_document_collaborators_DocumentId",
+                schema: "fileservice",
                 table: "document_collaborators",
                 column: "DocumentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_document_collaborators_DocumentId_UserId",
+                schema: "fileservice",
                 table: "document_collaborators",
                 columns: new[] { "DocumentId", "UserId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_document_collaborators_UserId",
+                schema: "fileservice",
                 table: "document_collaborators",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_accesses_AccessedAt",
+                schema: "fileservice",
                 table: "resource_accesses",
                 column: "AccessedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_accesses_AccessType",
+                schema: "fileservice",
                 table: "resource_accesses",
                 column: "AccessType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_accesses_ResourceId",
+                schema: "fileservice",
                 table: "resource_accesses",
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_accesses_UserId",
+                schema: "fileservice",
                 table: "resource_accesses",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_versions_IsCurrent",
+                schema: "fileservice",
                 table: "resource_versions",
                 column: "IsCurrent");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_versions_ResourceId",
+                schema: "fileservice",
                 table: "resource_versions",
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_versions_ResourceId_VersionNumber",
+                schema: "fileservice",
                 table: "resource_versions",
                 columns: new[] { "ResourceId", "VersionNumber" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_resource_versions_VersionNumber",
+                schema: "fileservice",
                 table: "resource_versions",
                 column: "VersionNumber");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resources_IsPublic",
+                schema: "fileservice",
                 table: "resources",
                 column: "IsPublic");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resources_Scope",
+                schema: "fileservice",
                 table: "resources",
                 column: "Scope");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resources_Scope_ScopeId",
+                schema: "fileservice",
                 table: "resources",
                 columns: new[] { "Scope", "ScopeId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_resources_ScopeId",
+                schema: "fileservice",
                 table: "resources",
                 column: "ScopeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_resources_UploadedBy",
+                schema: "fileservice",
                 table: "resources",
                 column: "UploadedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_shared_documents_IsLocked",
+                schema: "fileservice",
                 table: "shared_documents",
                 column: "IsLocked");
 
             migrationBuilder.CreateIndex(
                 name: "IX_shared_documents_LockedBy",
+                schema: "fileservice",
                 table: "shared_documents",
                 column: "LockedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_shared_documents_TeamId",
+                schema: "fileservice",
                 table: "shared_documents",
                 column: "TeamId");
         }
@@ -242,19 +272,24 @@ namespace FileService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "document_collaborators");
+                name: "document_collaborators",
+                schema: "fileservice");
 
             migrationBuilder.DropTable(
-                name: "resource_accesses");
+                name: "resource_accesses",
+                schema: "fileservice");
 
             migrationBuilder.DropTable(
-                name: "resource_versions");
+                name: "resource_versions",
+                schema: "fileservice");
 
             migrationBuilder.DropTable(
-                name: "shared_documents");
+                name: "shared_documents",
+                schema: "fileservice");
 
             migrationBuilder.DropTable(
-                name: "resources");
+                name: "resources",
+                schema: "fileservice");
         }
     }
 }

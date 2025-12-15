@@ -4,34 +4,23 @@ using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Load .env.local
 var envPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env.local");
 if (File.Exists(envPath))
 {
     Env.Load(envPath);
 }
 
-var host = Environment.GetEnvironmentVariable("FILE_SERVICE_DB_HOST") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_HOST") 
-    ?? "localhost";
-    
-var port = Environment.GetEnvironmentVariable("FILE_SERVICE_DB_PORT") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PORT") 
-    ?? "5432";
-    
-var database = Environment.GetEnvironmentVariable("FILE_SERVICE_DB_NAME") 
-    ?? "cosre_fileservice_local";
-    
-var username = Environment.GetEnvironmentVariable("FILE_SERVICE_DB_USER") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_USER") 
-    ?? "cosre_admin";
-    
-var password = Environment.GetEnvironmentVariable("FILE_SERVICE_DB_PASSWORD") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PASSWORD")
-    ?? throw new InvalidOperationException("Database password not configured");
+// Add environment variables to configuration
+builder.Configuration.AddEnvironmentVariables();
 
-var connectionString = builder.Environment.IsDevelopment() 
-    ? builder.Configuration.GetConnectionString("DefaultConnection")
-    : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+const string ServiceName = "FileService"; 
+const string ConnectionStringEnvVarName = $"ConnectionStrings__{ServiceName}";
+
+// Get connection string from configuration or environment variable
+var connectionString = builder.Configuration.GetConnectionString(ServiceName)
+    ?? Environment.GetEnvironmentVariable(ConnectionStringEnvVarName)
+    ?? throw new InvalidOperationException($"'{ServiceName}' connection string or environment variable '{ConnectionStringEnvVarName}' not configured");
 
 builder.Services.AddDbContext<FileServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>

@@ -11,29 +11,13 @@ if (File.Exists(envPath))
     Env.Load(envPath);
 }
 
-// Build connection string
-var host = Environment.GetEnvironmentVariable("ACADEMIC_SERVICE_DB_HOST") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_HOST") 
-    ?? "localhost";
-    
-var port = Environment.GetEnvironmentVariable("ACADEMIC_SERVICE_DB_PORT") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PORT") 
-    ?? "5432";
-    
-var database = Environment.GetEnvironmentVariable("ACADEMIC_SERVICE_DB_NAME") 
-    ?? "cosre_academicservice_local";
-    
-var username = Environment.GetEnvironmentVariable("ACADEMIC_SERVICE_DB_USER") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_USER") 
-    ?? "cosre_admin";
-    
-var password = Environment.GetEnvironmentVariable("ACADEMIC_SERVICE_DB_PASSWORD") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PASSWORD")
-    ?? throw new InvalidOperationException("Database password not configured");
+// Add environment variables to configuration
+builder.Configuration.AddEnvironmentVariables();
 
-var connectionString = builder.Environment.IsDevelopment() 
-    ? builder.Configuration.GetConnectionString("DefaultConnection")
-    : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+// Get connection string from configuration or environment variable
+var connectionString = builder.Configuration.GetConnectionString("AcademicService")
+    ?? Environment.GetEnvironmentVariable("ConnectionStrings__AcademicService")
+    ?? throw new InvalidOperationException("AcademicService connection string not configured");
 
 builder.Services.AddDbContext<AcademicServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
@@ -48,6 +32,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Auto-migrate in development
 if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();

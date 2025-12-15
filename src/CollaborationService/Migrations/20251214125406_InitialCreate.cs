@@ -11,8 +11,12 @@ namespace CollaborationService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "collaborationservice");
+
             migrationBuilder.CreateTable(
                 name: "workspaces",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     WorkspaceId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -34,6 +38,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "activity_logs",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     LogId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -53,6 +58,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_activity_logs_workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
+                        principalSchema: "collaborationservice",
                         principalTable: "workspaces",
                         principalColumn: "WorkspaceId",
                         onDelete: ReferentialAction.Cascade);
@@ -60,6 +66,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "boards",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     BoardId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -79,6 +86,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_boards_workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
+                        principalSchema: "collaborationservice",
                         principalTable: "workspaces",
                         principalColumn: "WorkspaceId",
                         onDelete: ReferentialAction.Cascade);
@@ -86,6 +94,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "sprints",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     SprintId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -108,6 +117,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_sprints_workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
+                        principalSchema: "collaborationservice",
                         principalTable: "workspaces",
                         principalColumn: "WorkspaceId",
                         onDelete: ReferentialAction.Cascade);
@@ -115,6 +125,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "columns",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     ColumnId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -134,6 +145,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_columns_boards_BoardId",
                         column: x => x.BoardId,
+                        principalSchema: "collaborationservice",
                         principalTable: "boards",
                         principalColumn: "BoardId",
                         onDelete: ReferentialAction.Cascade);
@@ -141,6 +153,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "cards",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     CardId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -172,12 +185,14 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_cards_columns_ColumnId",
                         column: x => x.ColumnId,
+                        principalSchema: "collaborationservice",
                         principalTable: "columns",
                         principalColumn: "ColumnId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_cards_sprints_SprintId",
                         column: x => x.SprintId,
+                        principalSchema: "collaborationservice",
                         principalTable: "sprints",
                         principalColumn: "SprintId",
                         onDelete: ReferentialAction.SetNull);
@@ -185,6 +200,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "card_assignments",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     AssignmentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -202,6 +218,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_card_assignments_cards_CardId",
                         column: x => x.CardId,
+                        principalSchema: "collaborationservice",
                         principalTable: "cards",
                         principalColumn: "CardId",
                         onDelete: ReferentialAction.Cascade);
@@ -209,6 +226,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "card_attachments",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     AttachmentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -230,6 +248,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_card_attachments_cards_CardId",
                         column: x => x.CardId,
+                        principalSchema: "collaborationservice",
                         principalTable: "cards",
                         principalColumn: "CardId",
                         onDelete: ReferentialAction.Cascade);
@@ -237,6 +256,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "card_comments",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     CommentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -256,12 +276,14 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_card_comments_card_comments_ParentCommentId",
                         column: x => x.ParentCommentId,
+                        principalSchema: "collaborationservice",
                         principalTable: "card_comments",
                         principalColumn: "CommentId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_card_comments_cards_CardId",
                         column: x => x.CardId,
+                        principalSchema: "collaborationservice",
                         principalTable: "cards",
                         principalColumn: "CardId",
                         onDelete: ReferentialAction.Cascade);
@@ -269,6 +291,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "tasks",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     TaskId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -292,6 +315,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_tasks_cards_CardId",
                         column: x => x.CardId,
+                        principalSchema: "collaborationservice",
                         principalTable: "cards",
                         principalColumn: "CardId",
                         onDelete: ReferentialAction.Cascade);
@@ -299,6 +323,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "subtasks",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     SubtaskId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -317,6 +342,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_subtasks_tasks_TaskId",
                         column: x => x.TaskId,
+                        principalSchema: "collaborationservice",
                         principalTable: "tasks",
                         principalColumn: "TaskId",
                         onDelete: ReferentialAction.Cascade);
@@ -324,6 +350,7 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "task_assignments",
+                schema: "collaborationservice",
                 columns: table => new
                 {
                     AssignmentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -341,6 +368,7 @@ namespace CollaborationService.Migrations
                     table.ForeignKey(
                         name: "FK_task_assignments_tasks_TaskId",
                         column: x => x.TaskId,
+                        principalSchema: "collaborationservice",
                         principalTable: "tasks",
                         principalColumn: "TaskId",
                         onDelete: ReferentialAction.Cascade);
@@ -348,213 +376,255 @@ namespace CollaborationService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_ActionType",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "ActionType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_EntityId",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_EntityType",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "EntityType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_PerformedAt",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "PerformedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_PerformedBy",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "PerformedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_activity_logs_WorkspaceId",
+                schema: "collaborationservice",
                 table: "activity_logs",
                 column: "WorkspaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_boards_IsDefault",
+                schema: "collaborationservice",
                 table: "boards",
                 column: "IsDefault");
 
             migrationBuilder.CreateIndex(
                 name: "IX_boards_Order",
+                schema: "collaborationservice",
                 table: "boards",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_boards_WorkspaceId",
+                schema: "collaborationservice",
                 table: "boards",
                 column: "WorkspaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_assignments_AssigneeId",
+                schema: "collaborationservice",
                 table: "card_assignments",
                 column: "AssigneeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_assignments_CardId",
+                schema: "collaborationservice",
                 table: "card_assignments",
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_assignments_CardId_AssigneeId",
+                schema: "collaborationservice",
                 table: "card_assignments",
                 columns: new[] { "CardId", "AssigneeId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_attachments_CardId",
+                schema: "collaborationservice",
                 table: "card_attachments",
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_attachments_UploadedBy",
+                schema: "collaborationservice",
                 table: "card_attachments",
                 column: "UploadedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_comments_CardId",
+                schema: "collaborationservice",
                 table: "card_comments",
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_comments_ParentCommentId",
+                schema: "collaborationservice",
                 table: "card_comments",
                 column: "ParentCommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_card_comments_UserId",
+                schema: "collaborationservice",
                 table: "card_comments",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_ColumnId",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "ColumnId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_DueDate",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "DueDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_IsArchived",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "IsArchived");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_Priority",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "Priority");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_SprintId",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "SprintId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cards_Status",
+                schema: "collaborationservice",
                 table: "cards",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_columns_BoardId",
+                schema: "collaborationservice",
                 table: "columns",
                 column: "BoardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_columns_ColumnType",
+                schema: "collaborationservice",
                 table: "columns",
                 column: "ColumnType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_columns_Order",
+                schema: "collaborationservice",
                 table: "columns",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sprints_EndDate",
+                schema: "collaborationservice",
                 table: "sprints",
                 column: "EndDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sprints_StartDate",
+                schema: "collaborationservice",
                 table: "sprints",
                 column: "StartDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sprints_Status",
+                schema: "collaborationservice",
                 table: "sprints",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_sprints_WorkspaceId",
+                schema: "collaborationservice",
                 table: "sprints",
                 column: "WorkspaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subtasks_IsCompleted",
+                schema: "collaborationservice",
                 table: "subtasks",
                 column: "IsCompleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subtasks_Order",
+                schema: "collaborationservice",
                 table: "subtasks",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subtasks_TaskId",
+                schema: "collaborationservice",
                 table: "subtasks",
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_task_assignments_AssigneeId",
+                schema: "collaborationservice",
                 table: "task_assignments",
                 column: "AssigneeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_task_assignments_TaskId",
+                schema: "collaborationservice",
                 table: "task_assignments",
                 column: "TaskId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_task_assignments_TaskId_AssigneeId",
+                schema: "collaborationservice",
                 table: "task_assignments",
                 columns: new[] { "TaskId", "AssigneeId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_tasks_CardId",
+                schema: "collaborationservice",
                 table: "tasks",
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tasks_DueDate",
+                schema: "collaborationservice",
                 table: "tasks",
                 column: "DueDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tasks_IsCompleted",
+                schema: "collaborationservice",
                 table: "tasks",
                 column: "IsCompleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tasks_Status",
+                schema: "collaborationservice",
                 table: "tasks",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_workspaces_IsActive",
+                schema: "collaborationservice",
                 table: "workspaces",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_workspaces_TeamId",
+                schema: "collaborationservice",
                 table: "workspaces",
                 column: "TeamId",
                 unique: true);
@@ -564,40 +634,52 @@ namespace CollaborationService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "activity_logs");
+                name: "activity_logs",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "card_assignments");
+                name: "card_assignments",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "card_attachments");
+                name: "card_attachments",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "card_comments");
+                name: "card_comments",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "subtasks");
+                name: "subtasks",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "task_assignments");
+                name: "task_assignments",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "tasks");
+                name: "tasks",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "cards");
+                name: "cards",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "columns");
+                name: "columns",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "sprints");
+                name: "sprints",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "boards");
+                name: "boards",
+                schema: "collaborationservice");
 
             migrationBuilder.DropTable(
-                name: "workspaces");
+                name: "workspaces",
+                schema: "collaborationservice");
         }
     }
 }

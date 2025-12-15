@@ -4,46 +4,29 @@ using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load .env.local from project root
+// Load .env.local
 var envPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", ".env.local");
 if (File.Exists(envPath))
 {
     Env.Load(envPath);
 }
 
-// Build connection string from environment variables with fallbacks
-var host = Environment.GetEnvironmentVariable("USER_SERVICE_DB_HOST") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_HOST") 
-    ?? "localhost";
-    
-var port = Environment.GetEnvironmentVariable("USER_SERVICE_DB_PORT") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PORT") 
-    ?? "5432";
-    
-var database = Environment.GetEnvironmentVariable("USER_SERVICE_DB_NAME") 
-    ?? "cosre_userservice_local";
-    
-var username = Environment.GetEnvironmentVariable("USER_SERVICE_DB_USER") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_USER") 
-    ?? "cosre_admin";
-    
-var password = Environment.GetEnvironmentVariable("USER_SERVICE_DB_PASSWORD") 
-    ?? Environment.GetEnvironmentVariable("RENDER_DB_PASSWORD")
-    ?? throw new InvalidOperationException("Database password not configured");
+// Add environment variables to configuration
+builder.Configuration.AddEnvironmentVariables();
 
-// Use Development config for local, build connection string for production
-var connectionString = builder.Environment.IsDevelopment() 
-    ? builder.Configuration.GetConnectionString("DefaultConnection")
-    : $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true";
+const string ServiceName = "UserService"; 
+const string ConnectionStringEnvVarName = $"ConnectionStrings__{ServiceName}";
+
+// Get connection string from configuration or environment variable
+var connectionString = builder.Configuration.GetConnectionString(ServiceName)
+    ?? Environment.GetEnvironmentVariable(ConnectionStringEnvVarName)
+    ?? throw new InvalidOperationException($"'{ServiceName}' connection string or environment variable '{ConnectionStringEnvVarName}' not configured");
 
 // Add DbContext
 builder.Services.AddDbContext<UserServiceDbContext>(options =>
     options.UseNpgsql(connectionString, npgsqlOptions =>
     {
-        npgsqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 5,
-            maxRetryDelay: TimeSpan.FromSeconds(30),
-            errorCodesToAdd: null);
+        npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(30), null);
         npgsqlOptions.CommandTimeout(60);
     }));
 

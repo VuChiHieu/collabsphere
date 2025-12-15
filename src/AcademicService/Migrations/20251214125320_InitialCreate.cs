@@ -11,8 +11,12 @@ namespace AcademicService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "academicservice");
+
             migrationBuilder.CreateTable(
                 name: "subjects",
+                schema: "academicservice",
                 columns: table => new
                 {
                     SubjectId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -38,6 +42,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "syllabi",
+                schema: "academicservice",
                 columns: table => new
                 {
                     SyllabusId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -68,6 +73,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_syllabi_subjects_SubjectId",
                         column: x => x.SubjectId,
+                        principalSchema: "academicservice",
                         principalTable: "subjects",
                         principalColumn: "SubjectId",
                         onDelete: ReferentialAction.Restrict);
@@ -75,6 +81,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "classes",
+                schema: "academicservice",
                 columns: table => new
                 {
                     ClassId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -102,6 +109,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_classes_syllabi_SyllabusId",
                         column: x => x.SyllabusId,
+                        principalSchema: "academicservice",
                         principalTable: "syllabi",
                         principalColumn: "SyllabusId",
                         onDelete: ReferentialAction.Restrict);
@@ -109,6 +117,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "syllabus_weeks",
+                schema: "academicservice",
                 columns: table => new
                 {
                     SyllabusWeekId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -130,6 +139,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_syllabus_weeks_syllabi_SyllabusId",
                         column: x => x.SyllabusId,
+                        principalSchema: "academicservice",
                         principalTable: "syllabi",
                         principalColumn: "SyllabusId",
                         onDelete: ReferentialAction.Cascade);
@@ -137,6 +147,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "class_lecturers",
+                schema: "academicservice",
                 columns: table => new
                 {
                     ClassLecturerId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -155,6 +166,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_class_lecturers_classes_ClassId",
                         column: x => x.ClassId,
+                        principalSchema: "academicservice",
                         principalTable: "classes",
                         principalColumn: "ClassId",
                         onDelete: ReferentialAction.Cascade);
@@ -162,6 +174,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "class_schedule_slots",
+                schema: "academicservice",
                 columns: table => new
                 {
                     ScheduleSlotId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -184,6 +197,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_class_schedule_slots_classes_ClassId",
                         column: x => x.ClassId,
+                        principalSchema: "academicservice",
                         principalTable: "classes",
                         principalColumn: "ClassId",
                         onDelete: ReferentialAction.Cascade);
@@ -191,6 +205,7 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "class_students",
+                schema: "academicservice",
                 columns: table => new
                 {
                     ClassStudentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -211,6 +226,7 @@ namespace AcademicService.Migrations
                     table.ForeignKey(
                         name: "FK_class_students_classes_ClassId",
                         column: x => x.ClassId,
+                        principalSchema: "academicservice",
                         principalTable: "classes",
                         principalColumn: "ClassId",
                         onDelete: ReferentialAction.Cascade);
@@ -218,128 +234,152 @@ namespace AcademicService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_lecturers_ClassId",
+                schema: "academicservice",
                 table: "class_lecturers",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_lecturers_ClassId_LecturerId",
+                schema: "academicservice",
                 table: "class_lecturers",
                 columns: new[] { "ClassId", "LecturerId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_lecturers_LecturerId",
+                schema: "academicservice",
                 table: "class_lecturers",
                 column: "LecturerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_schedule_slots_ClassId",
+                schema: "academicservice",
                 table: "class_schedule_slots",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_schedule_slots_ClassId_SlotNumber",
+                schema: "academicservice",
                 table: "class_schedule_slots",
                 columns: new[] { "ClassId", "SlotNumber" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_schedule_slots_ScheduledDate",
+                schema: "academicservice",
                 table: "class_schedule_slots",
                 column: "ScheduledDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_students_ClassId",
+                schema: "academicservice",
                 table: "class_students",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_students_ClassId_StudentId",
+                schema: "academicservice",
                 table: "class_students",
                 columns: new[] { "ClassId", "StudentId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_students_Status",
+                schema: "academicservice",
                 table: "class_students",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_students_StudentId",
+                schema: "academicservice",
                 table: "class_students",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_classes_ClassCode",
+                schema: "academicservice",
                 table: "classes",
                 column: "ClassCode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_classes_Semester_AcademicYear",
+                schema: "academicservice",
                 table: "classes",
                 columns: new[] { "Semester", "AcademicYear" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_classes_Status",
+                schema: "academicservice",
                 table: "classes",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_classes_SyllabusId",
+                schema: "academicservice",
                 table: "classes",
                 column: "SyllabusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subjects_DepartmentId",
+                schema: "academicservice",
                 table: "subjects",
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subjects_IsActive",
+                schema: "academicservice",
                 table: "subjects",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_subjects_SubjectCode",
+                schema: "academicservice",
                 table: "subjects",
                 column: "SubjectCode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabi_IsActive",
+                schema: "academicservice",
                 table: "syllabi",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabi_Semester_AcademicYear",
+                schema: "academicservice",
                 table: "syllabi",
                 columns: new[] { "Semester", "AcademicYear" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabi_SubjectId",
+                schema: "academicservice",
                 table: "syllabi",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabi_SyllabusCode",
+                schema: "academicservice",
                 table: "syllabi",
                 column: "SyllabusCode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabus_weeks_SyllabusId",
+                schema: "academicservice",
                 table: "syllabus_weeks",
                 column: "SyllabusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabus_weeks_SyllabusId_WeekNumber",
+                schema: "academicservice",
                 table: "syllabus_weeks",
                 columns: new[] { "SyllabusId", "WeekNumber" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_syllabus_weeks_WeekNumber",
+                schema: "academicservice",
                 table: "syllabus_weeks",
                 column: "WeekNumber");
         }
@@ -348,25 +388,32 @@ namespace AcademicService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "class_lecturers");
+                name: "class_lecturers",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "class_schedule_slots");
+                name: "class_schedule_slots",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "class_students");
+                name: "class_students",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "syllabus_weeks");
+                name: "syllabus_weeks",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "classes");
+                name: "classes",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "syllabi");
+                name: "syllabi",
+                schema: "academicservice");
 
             migrationBuilder.DropTable(
-                name: "subjects");
+                name: "subjects",
+                schema: "academicservice");
         }
     }
 }

@@ -12,7 +12,7 @@ using UserService.Data;
 namespace UserService.Migrations
 {
     [DbContext(typeof(UserServiceDbContext))]
-    [Migration("20251214112526_InitialCreate")]
+    [Migration("20251214125306_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace UserService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("userservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -68,7 +69,7 @@ namespace UserService.Migrations
 
                     b.HasIndex("HeadOfDepartmentId");
 
-                    b.ToTable("departments", (string)null);
+                    b.ToTable("departments", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.Permission", b =>
@@ -104,7 +105,7 @@ namespace UserService.Migrations
                     b.HasIndex("PermissionName")
                         .IsUnique();
 
-                    b.ToTable("permissions", (string)null);
+                    b.ToTable("permissions", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.RefreshToken", b =>
@@ -151,7 +152,7 @@ namespace UserService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("refresh_tokens", (string)null);
+                    b.ToTable("refresh_tokens", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.Role", b =>
@@ -180,7 +181,7 @@ namespace UserService.Migrations
                     b.HasIndex("RoleName")
                         .IsUnique();
 
-                    b.ToTable("roles", (string)null);
+                    b.ToTable("roles", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.RolePermission", b =>
@@ -208,7 +209,7 @@ namespace UserService.Migrations
                     b.HasIndex("RoleId", "PermissionId")
                         .IsUnique();
 
-                    b.ToTable("role_permissions", (string)null);
+                    b.ToTable("role_permissions", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.User", b =>
@@ -271,7 +272,7 @@ namespace UserService.Migrations
 
                     b.HasIndex("IsActive");
 
-                    b.ToTable("users", (string)null);
+                    b.ToTable("users", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.UserProfile", b =>
@@ -331,7 +332,7 @@ namespace UserService.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("user_profiles", (string)null);
+                    b.ToTable("user_profiles", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.UserRole", b =>
@@ -367,7 +368,7 @@ namespace UserService.Migrations
                     b.HasIndex("UserId", "RoleId")
                         .IsUnique();
 
-                    b.ToTable("user_roles", (string)null);
+                    b.ToTable("user_roles", "userservice");
                 });
 
             modelBuilder.Entity("UserService.Models.Entities.RefreshToken", b =>

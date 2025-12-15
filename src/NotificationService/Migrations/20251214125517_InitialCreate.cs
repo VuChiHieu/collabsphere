@@ -11,8 +11,12 @@ namespace NotificationService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "notificationservice");
+
             migrationBuilder.CreateTable(
                 name: "email_notifications",
+                schema: "notificationservice",
                 columns: table => new
                 {
                     EmailId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -37,6 +41,7 @@ namespace NotificationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "notification_preferences",
+                schema: "notificationservice",
                 columns: table => new
                 {
                     PreferenceId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -62,6 +67,7 @@ namespace NotificationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "notification_queues",
+                schema: "notificationservice",
                 columns: table => new
                 {
                     QueueId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -84,6 +90,7 @@ namespace NotificationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "notifications",
+                schema: "notificationservice",
                 columns: table => new
                 {
                     NotificationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -111,6 +118,7 @@ namespace NotificationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "user_device_tokens",
+                schema: "notificationservice",
                 columns: table => new
                 {
                     TokenId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -131,88 +139,105 @@ namespace NotificationService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_email_notifications_EmailType",
+                schema: "notificationservice",
                 table: "email_notifications",
                 column: "EmailType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_email_notifications_SentAt",
+                schema: "notificationservice",
                 table: "email_notifications",
                 column: "SentAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_email_notifications_Status",
+                schema: "notificationservice",
                 table: "email_notifications",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_email_notifications_UserId",
+                schema: "notificationservice",
                 table: "email_notifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notification_preferences_UserId",
+                schema: "notificationservice",
                 table: "notification_preferences",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_notification_queues_NotificationType",
+                schema: "notificationservice",
                 table: "notification_queues",
                 column: "NotificationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notification_queues_Priority",
+                schema: "notificationservice",
                 table: "notification_queues",
                 column: "Priority");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notification_queues_ScheduledFor",
+                schema: "notificationservice",
                 table: "notification_queues",
                 column: "ScheduledFor");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notification_queues_Status",
+                schema: "notificationservice",
                 table: "notification_queues",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notifications_CreatedAt",
+                schema: "notificationservice",
                 table: "notifications",
                 column: "CreatedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notifications_IsRead",
+                schema: "notificationservice",
                 table: "notifications",
                 column: "IsRead");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notifications_NotificationType",
+                schema: "notificationservice",
                 table: "notifications",
                 column: "NotificationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notifications_Priority",
+                schema: "notificationservice",
                 table: "notifications",
                 column: "Priority");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notifications_UserId",
+                schema: "notificationservice",
                 table: "notifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_device_tokens_DeviceToken",
+                schema: "notificationservice",
                 table: "user_device_tokens",
                 column: "DeviceToken",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_device_tokens_IsActive",
+                schema: "notificationservice",
                 table: "user_device_tokens",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_device_tokens_UserId",
+                schema: "notificationservice",
                 table: "user_device_tokens",
                 column: "UserId");
         }
@@ -221,19 +246,24 @@ namespace NotificationService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "email_notifications");
+                name: "email_notifications",
+                schema: "notificationservice");
 
             migrationBuilder.DropTable(
-                name: "notification_preferences");
+                name: "notification_preferences",
+                schema: "notificationservice");
 
             migrationBuilder.DropTable(
-                name: "notification_queues");
+                name: "notification_queues",
+                schema: "notificationservice");
 
             migrationBuilder.DropTable(
-                name: "notifications");
+                name: "notifications",
+                schema: "notificationservice");
 
             migrationBuilder.DropTable(
-                name: "user_device_tokens");
+                name: "user_device_tokens",
+                schema: "notificationservice");
         }
     }
 }

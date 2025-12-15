@@ -11,8 +11,12 @@ namespace CommunicationService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "communicationservice");
+
             migrationBuilder.CreateTable(
                 name: "channels",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     ChannelId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -38,6 +42,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "direct_messages",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     MessageId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -62,6 +67,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "channel_members",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     MemberId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -81,6 +87,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_channel_members_channels_ChannelId",
                         column: x => x.ChannelId,
+                        principalSchema: "communicationservice",
                         principalTable: "channels",
                         principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
@@ -88,6 +95,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "meetings",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     MeetingId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -116,6 +124,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_meetings_channels_ChannelId",
                         column: x => x.ChannelId,
+                        principalSchema: "communicationservice",
                         principalTable: "channels",
                         principalColumn: "ChannelId",
                         onDelete: ReferentialAction.SetNull);
@@ -123,6 +132,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "messages",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     MessageId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -146,12 +156,14 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_messages_channels_ChannelId",
                         column: x => x.ChannelId,
+                        principalSchema: "communicationservice",
                         principalTable: "channels",
                         principalColumn: "ChannelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_messages_messages_ParentMessageId",
                         column: x => x.ParentMessageId,
+                        principalSchema: "communicationservice",
                         principalTable: "messages",
                         principalColumn: "MessageId",
                         onDelete: ReferentialAction.Restrict);
@@ -159,6 +171,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "meeting_notes",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     NoteId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -178,6 +191,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_meeting_notes_meetings_MeetingId",
                         column: x => x.MeetingId,
+                        principalSchema: "communicationservice",
                         principalTable: "meetings",
                         principalColumn: "MeetingId",
                         onDelete: ReferentialAction.Cascade);
@@ -185,6 +199,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "meeting_participants",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     ParticipantId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -205,6 +220,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_meeting_participants_meetings_MeetingId",
                         column: x => x.MeetingId,
+                        principalSchema: "communicationservice",
                         principalTable: "meetings",
                         principalColumn: "MeetingId",
                         onDelete: ReferentialAction.Cascade);
@@ -212,6 +228,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "message_reactions",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     ReactionId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -228,6 +245,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_message_reactions_messages_MessageId",
                         column: x => x.MessageId,
+                        principalSchema: "communicationservice",
                         principalTable: "messages",
                         principalColumn: "MessageId",
                         onDelete: ReferentialAction.Cascade);
@@ -235,6 +253,7 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "message_reads",
+                schema: "communicationservice",
                 columns: table => new
                 {
                     ReadId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -250,6 +269,7 @@ namespace CommunicationService.Migrations
                     table.ForeignKey(
                         name: "FK_message_reads_messages_MessageId",
                         column: x => x.MessageId,
+                        principalSchema: "communicationservice",
                         principalTable: "messages",
                         principalColumn: "MessageId",
                         onDelete: ReferentialAction.Cascade);
@@ -257,160 +277,191 @@ namespace CommunicationService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_channel_members_ChannelId",
+                schema: "communicationservice",
                 table: "channel_members",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_channel_members_ChannelId_UserId",
+                schema: "communicationservice",
                 table: "channel_members",
                 columns: new[] { "ChannelId", "UserId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_channel_members_UserId",
+                schema: "communicationservice",
                 table: "channel_members",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_channels_ChannelType",
+                schema: "communicationservice",
                 table: "channels",
                 column: "ChannelType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_channels_IsDefault",
+                schema: "communicationservice",
                 table: "channels",
                 column: "IsDefault");
 
             migrationBuilder.CreateIndex(
                 name: "IX_channels_IsPrivate",
+                schema: "communicationservice",
                 table: "channels",
                 column: "IsPrivate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_channels_TeamId",
+                schema: "communicationservice",
                 table: "channels",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_direct_messages_IsRead",
+                schema: "communicationservice",
                 table: "direct_messages",
                 column: "IsRead");
 
             migrationBuilder.CreateIndex(
                 name: "IX_direct_messages_ReceiverId",
+                schema: "communicationservice",
                 table: "direct_messages",
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_direct_messages_SenderId",
+                schema: "communicationservice",
                 table: "direct_messages",
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_direct_messages_SenderId_ReceiverId",
+                schema: "communicationservice",
                 table: "direct_messages",
                 columns: new[] { "SenderId", "ReceiverId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_meeting_notes_CreatedBy",
+                schema: "communicationservice",
                 table: "meeting_notes",
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meeting_notes_MeetingId",
+                schema: "communicationservice",
                 table: "meeting_notes",
                 column: "MeetingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meeting_participants_MeetingId",
+                schema: "communicationservice",
                 table: "meeting_participants",
                 column: "MeetingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meeting_participants_MeetingId_UserId",
+                schema: "communicationservice",
                 table: "meeting_participants",
                 columns: new[] { "MeetingId", "UserId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_meeting_participants_UserId",
+                schema: "communicationservice",
                 table: "meeting_participants",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meetings_ChannelId",
+                schema: "communicationservice",
                 table: "meetings",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meetings_ScheduledStartTime",
+                schema: "communicationservice",
                 table: "meetings",
                 column: "ScheduledStartTime");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meetings_Status",
+                schema: "communicationservice",
                 table: "meetings",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_meetings_TeamId",
+                schema: "communicationservice",
                 table: "meetings",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reactions_MessageId",
+                schema: "communicationservice",
                 table: "message_reactions",
                 column: "MessageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reactions_MessageId_UserId_Emoji",
+                schema: "communicationservice",
                 table: "message_reactions",
                 columns: new[] { "MessageId", "UserId", "Emoji" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reactions_UserId",
+                schema: "communicationservice",
                 table: "message_reactions",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reads_MessageId",
+                schema: "communicationservice",
                 table: "message_reads",
                 column: "MessageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reads_MessageId_UserId",
+                schema: "communicationservice",
                 table: "message_reads",
                 columns: new[] { "MessageId", "UserId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_message_reads_UserId",
+                schema: "communicationservice",
                 table: "message_reads",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_messages_ChannelId",
+                schema: "communicationservice",
                 table: "messages",
                 column: "ChannelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_messages_CreatedAt",
+                schema: "communicationservice",
                 table: "messages",
                 column: "CreatedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_messages_IsPinned",
+                schema: "communicationservice",
                 table: "messages",
                 column: "IsPinned");
 
             migrationBuilder.CreateIndex(
                 name: "IX_messages_ParentMessageId",
+                schema: "communicationservice",
                 table: "messages",
                 column: "ParentMessageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_messages_SenderId",
+                schema: "communicationservice",
                 table: "messages",
                 column: "SenderId");
         }
@@ -419,31 +470,40 @@ namespace CommunicationService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "channel_members");
+                name: "channel_members",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "direct_messages");
+                name: "direct_messages",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "meeting_notes");
+                name: "meeting_notes",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "meeting_participants");
+                name: "meeting_participants",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "message_reactions");
+                name: "message_reactions",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "message_reads");
+                name: "message_reads",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "meetings");
+                name: "meetings",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "messages");
+                name: "messages",
+                schema: "communicationservice");
 
             migrationBuilder.DropTable(
-                name: "channels");
+                name: "channels",
+                schema: "communicationservice");
         }
     }
 }
