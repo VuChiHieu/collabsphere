@@ -23,6 +23,7 @@ public class UserServiceDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("userservice");
         base.OnModelCreating(modelBuilder);
 
         // Apply configurations from separate files

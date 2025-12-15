@@ -11,8 +11,12 @@ namespace TeamService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "teamservice");
+
             migrationBuilder.CreateTable(
                 name: "teams",
+                schema: "teamservice",
                 columns: table => new
                 {
                     TeamId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -39,6 +43,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "checkpoints",
+                schema: "teamservice",
                 columns: table => new
                 {
                     CheckpointId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -62,6 +67,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_checkpoints_teams_TeamId",
                         column: x => x.TeamId,
+                        principalSchema: "teamservice",
                         principalTable: "teams",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
@@ -69,6 +75,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "team_members",
+                schema: "teamservice",
                 columns: table => new
                 {
                     TeamMemberId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -89,6 +96,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_team_members_teams_TeamId",
                         column: x => x.TeamId,
+                        principalSchema: "teamservice",
                         principalTable: "teams",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
@@ -96,6 +104,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "team_milestones",
+                schema: "teamservice",
                 columns: table => new
                 {
                     TeamMilestoneId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -119,6 +128,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_team_milestones_teams_TeamId",
                         column: x => x.TeamId,
+                        principalSchema: "teamservice",
                         principalTable: "teams",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
@@ -126,6 +136,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "team_progress_logs",
+                schema: "teamservice",
                 columns: table => new
                 {
                     LogId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -143,6 +154,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_team_progress_logs_teams_TeamId",
                         column: x => x.TeamId,
+                        principalSchema: "teamservice",
                         principalTable: "teams",
                         principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
@@ -150,6 +162,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "checkpoint_submissions",
+                schema: "teamservice",
                 columns: table => new
                 {
                     SubmissionId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -169,6 +182,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_checkpoint_submissions_checkpoints_CheckpointId",
                         column: x => x.CheckpointId,
+                        principalSchema: "teamservice",
                         principalTable: "checkpoints",
                         principalColumn: "CheckpointId",
                         onDelete: ReferentialAction.Cascade);
@@ -176,6 +190,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "checkpoint_assignments",
+                schema: "teamservice",
                 columns: table => new
                 {
                     AssignmentId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -194,12 +209,14 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_checkpoint_assignments_checkpoints_CheckpointId",
                         column: x => x.CheckpointId,
+                        principalSchema: "teamservice",
                         principalTable: "checkpoints",
                         principalColumn: "CheckpointId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_checkpoint_assignments_team_members_TeamMemberId",
                         column: x => x.TeamMemberId,
+                        principalSchema: "teamservice",
                         principalTable: "team_members",
                         principalColumn: "TeamMemberId",
                         onDelete: ReferentialAction.Cascade);
@@ -207,6 +224,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "milestone_questions",
+                schema: "teamservice",
                 columns: table => new
                 {
                     QuestionId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -226,6 +244,7 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_milestone_questions_team_milestones_TeamMilestoneId",
                         column: x => x.TeamMilestoneId,
+                        principalSchema: "teamservice",
                         principalTable: "team_milestones",
                         principalColumn: "TeamMilestoneId",
                         onDelete: ReferentialAction.Cascade);
@@ -233,6 +252,7 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "milestone_answers",
+                schema: "teamservice",
                 columns: table => new
                 {
                     AnswerId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -255,12 +275,14 @@ namespace TeamService.Migrations
                     table.ForeignKey(
                         name: "FK_milestone_answers_milestone_questions_QuestionId",
                         column: x => x.QuestionId,
+                        principalSchema: "teamservice",
                         principalTable: "milestone_questions",
                         principalColumn: "QuestionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_milestone_answers_team_members_TeamMemberId",
                         column: x => x.TeamMemberId,
+                        principalSchema: "teamservice",
                         principalTable: "team_members",
                         principalColumn: "TeamMemberId",
                         onDelete: ReferentialAction.Cascade);
@@ -268,161 +290,192 @@ namespace TeamService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_assignments_CheckpointId",
+                schema: "teamservice",
                 table: "checkpoint_assignments",
                 column: "CheckpointId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_assignments_CheckpointId_TeamMemberId",
+                schema: "teamservice",
                 table: "checkpoint_assignments",
                 columns: new[] { "CheckpointId", "TeamMemberId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_assignments_Status",
+                schema: "teamservice",
                 table: "checkpoint_assignments",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_assignments_TeamMemberId",
+                schema: "teamservice",
                 table: "checkpoint_assignments",
                 column: "TeamMemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_submissions_CheckpointId",
+                schema: "teamservice",
                 table: "checkpoint_submissions",
                 column: "CheckpointId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_submissions_IsLatest",
+                schema: "teamservice",
                 table: "checkpoint_submissions",
                 column: "IsLatest");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_submissions_SubmittedBy",
+                schema: "teamservice",
                 table: "checkpoint_submissions",
                 column: "SubmittedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_submissions_Version",
+                schema: "teamservice",
                 table: "checkpoint_submissions",
                 column: "Version");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoints_DueDate",
+                schema: "teamservice",
                 table: "checkpoints",
                 column: "DueDate");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoints_Status",
+                schema: "teamservice",
                 table: "checkpoints",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoints_TeamId",
+                schema: "teamservice",
                 table: "checkpoints",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answers_QuestionId",
+                schema: "teamservice",
                 table: "milestone_answers",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answers_QuestionId_TeamMemberId",
+                schema: "teamservice",
                 table: "milestone_answers",
                 columns: new[] { "QuestionId", "TeamMemberId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answers_TeamMemberId",
+                schema: "teamservice",
                 table: "milestone_answers",
                 column: "TeamMemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_questions_Order",
+                schema: "teamservice",
                 table: "milestone_questions",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_questions_TeamMilestoneId",
+                schema: "teamservice",
                 table: "milestone_questions",
                 column: "TeamMilestoneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_members_Status",
+                schema: "teamservice",
                 table: "team_members",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_members_StudentId",
+                schema: "teamservice",
                 table: "team_members",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_members_TeamId",
+                schema: "teamservice",
                 table: "team_members",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_members_TeamId_StudentId",
+                schema: "teamservice",
                 table: "team_members",
                 columns: new[] { "TeamId", "StudentId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_milestones_ProjectMilestoneId",
+                schema: "teamservice",
                 table: "team_milestones",
                 column: "ProjectMilestoneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_milestones_Status",
+                schema: "teamservice",
                 table: "team_milestones",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_milestones_TeamId",
+                schema: "teamservice",
                 table: "team_milestones",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_milestones_TeamId_ProjectMilestoneId",
+                schema: "teamservice",
                 table: "team_milestones",
                 columns: new[] { "TeamId", "ProjectMilestoneId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_progress_logs_LoggedAt",
+                schema: "teamservice",
                 table: "team_progress_logs",
                 column: "LoggedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_progress_logs_TeamId",
+                schema: "teamservice",
                 table: "team_progress_logs",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_teams_ClassId",
+                schema: "teamservice",
                 table: "teams",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_teams_ProjectId",
+                schema: "teamservice",
                 table: "teams",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_teams_Status",
+                schema: "teamservice",
                 table: "teams",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_teams_TeamCode",
+                schema: "teamservice",
                 table: "teams",
                 column: "TeamCode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_teams_TeamLeaderId",
+                schema: "teamservice",
                 table: "teams",
                 column: "TeamLeaderId");
         }
@@ -431,31 +484,40 @@ namespace TeamService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "checkpoint_assignments");
+                name: "checkpoint_assignments",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "checkpoint_submissions");
+                name: "checkpoint_submissions",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "milestone_answers");
+                name: "milestone_answers",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "team_progress_logs");
+                name: "team_progress_logs",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "checkpoints");
+                name: "checkpoints",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "milestone_questions");
+                name: "milestone_questions",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "team_members");
+                name: "team_members",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "team_milestones");
+                name: "team_milestones",
+                schema: "teamservice");
 
             migrationBuilder.DropTable(
-                name: "teams");
+                name: "teams",
+                schema: "teamservice");
         }
     }
 }

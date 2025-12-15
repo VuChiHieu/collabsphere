@@ -11,8 +11,12 @@ namespace EvaluationService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "evaluationservice");
+
             migrationBuilder.CreateTable(
                 name: "checkpoint_evaluations",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     EvaluationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -35,6 +39,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "evaluation_criteria",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     CriterionId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -56,6 +61,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "evaluation_templates",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     TemplateId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -77,6 +83,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "member_evaluations",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     EvaluationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -100,6 +107,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "milestone_answer_evaluations",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     EvaluationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -121,6 +129,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "milestone_answer_peer_reviews",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     ReviewId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -140,6 +149,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "peer_reviews",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     ReviewId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -167,6 +177,7 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "team_evaluations",
+                schema: "evaluationservice",
                 columns: table => new
                 {
                     EvaluationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -188,145 +199,173 @@ namespace EvaluationService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_evaluations_CheckpointId",
+                schema: "evaluationservice",
                 table: "checkpoint_evaluations",
                 column: "CheckpointId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_evaluations_EvaluatedBy",
+                schema: "evaluationservice",
                 table: "checkpoint_evaluations",
                 column: "EvaluatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_checkpoint_evaluations_Status",
+                schema: "evaluationservice",
                 table: "checkpoint_evaluations",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_criteria_EvaluationType",
+                schema: "evaluationservice",
                 table: "evaluation_criteria",
                 column: "EvaluationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_criteria_IsActive",
+                schema: "evaluationservice",
                 table: "evaluation_criteria",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_criteria_Order",
+                schema: "evaluationservice",
                 table: "evaluation_criteria",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_templates_EvaluationType",
+                schema: "evaluationservice",
                 table: "evaluation_templates",
                 column: "EvaluationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_templates_IsActive",
+                schema: "evaluationservice",
                 table: "evaluation_templates",
                 column: "IsActive");
 
             migrationBuilder.CreateIndex(
                 name: "IX_evaluation_templates_IsPublic",
+                schema: "evaluationservice",
                 table: "evaluation_templates",
                 column: "IsPublic");
 
             migrationBuilder.CreateIndex(
                 name: "IX_member_evaluations_EvaluatedBy",
+                schema: "evaluationservice",
                 table: "member_evaluations",
                 column: "EvaluatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_member_evaluations_EvaluationType",
+                schema: "evaluationservice",
                 table: "member_evaluations",
                 column: "EvaluationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_member_evaluations_StudentId",
+                schema: "evaluationservice",
                 table: "member_evaluations",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_member_evaluations_TeamId",
+                schema: "evaluationservice",
                 table: "member_evaluations",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_evaluations_AnswerId",
+                schema: "evaluationservice",
                 table: "milestone_answer_evaluations",
                 column: "AnswerId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_evaluations_EvaluatedBy",
+                schema: "evaluationservice",
                 table: "milestone_answer_evaluations",
                 column: "EvaluatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_evaluations_Status",
+                schema: "evaluationservice",
                 table: "milestone_answer_evaluations",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_peer_reviews_AnswerId",
+                schema: "evaluationservice",
                 table: "milestone_answer_peer_reviews",
                 column: "AnswerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_peer_reviews_AnswerId_ReviewerId",
+                schema: "evaluationservice",
                 table: "milestone_answer_peer_reviews",
                 columns: new[] { "AnswerId", "ReviewerId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_milestone_answer_peer_reviews_ReviewerId",
+                schema: "evaluationservice",
                 table: "milestone_answer_peer_reviews",
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_peer_reviews_MilestoneId",
+                schema: "evaluationservice",
                 table: "peer_reviews",
                 column: "MilestoneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_peer_reviews_RevieweeId",
+                schema: "evaluationservice",
                 table: "peer_reviews",
                 column: "RevieweeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_peer_reviews_ReviewerId",
+                schema: "evaluationservice",
                 table: "peer_reviews",
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_peer_reviews_TeamId",
+                schema: "evaluationservice",
                 table: "peer_reviews",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_peer_reviews_TeamId_ReviewerId_RevieweeId_MilestoneId",
+                schema: "evaluationservice",
                 table: "peer_reviews",
                 columns: new[] { "TeamId", "ReviewerId", "RevieweeId", "MilestoneId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_evaluations_EvaluatedBy",
+                schema: "evaluationservice",
                 table: "team_evaluations",
                 column: "EvaluatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_evaluations_EvaluationType",
+                schema: "evaluationservice",
                 table: "team_evaluations",
                 column: "EvaluationType");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_evaluations_MilestoneId",
+                schema: "evaluationservice",
                 table: "team_evaluations",
                 column: "MilestoneId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_team_evaluations_TeamId",
+                schema: "evaluationservice",
                 table: "team_evaluations",
                 column: "TeamId");
         }
@@ -335,28 +374,36 @@ namespace EvaluationService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "checkpoint_evaluations");
+                name: "checkpoint_evaluations",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "evaluation_criteria");
+                name: "evaluation_criteria",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "evaluation_templates");
+                name: "evaluation_templates",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "member_evaluations");
+                name: "member_evaluations",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "milestone_answer_evaluations");
+                name: "milestone_answer_evaluations",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "milestone_answer_peer_reviews");
+                name: "milestone_answer_peer_reviews",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "peer_reviews");
+                name: "peer_reviews",
+                schema: "evaluationservice");
 
             migrationBuilder.DropTable(
-                name: "team_evaluations");
+                name: "team_evaluations",
+                schema: "evaluationservice");
         }
     }
 }

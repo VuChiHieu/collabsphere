@@ -17,6 +17,7 @@ namespace ProjectService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("projectservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -68,7 +69,7 @@ namespace ProjectService.Migrations
                     b.HasIndex("ClassId", "ProjectId")
                         .IsUnique();
 
-                    b.ToTable("class_projects", (string)null);
+                    b.ToTable("class_projects", "projectservice");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Entities.Project", b =>
@@ -178,7 +179,7 @@ namespace ProjectService.Migrations
 
                     b.HasIndex("SyllabusId");
 
-                    b.ToTable("projects", (string)null);
+                    b.ToTable("projects", "projectservice");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Entities.ProjectAIGeneration", b =>
@@ -223,7 +224,7 @@ namespace ProjectService.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("project_ai_generations", (string)null);
+                    b.ToTable("project_ai_generations", "projectservice");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Entities.ProjectMilestone", b =>
@@ -286,7 +287,7 @@ namespace ProjectService.Migrations
                     b.HasIndex("ProjectId", "MilestoneCode")
                         .IsUnique();
 
-                    b.ToTable("project_milestones", (string)null);
+                    b.ToTable("project_milestones", "projectservice");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Entities.ProjectObjective", b =>
@@ -337,7 +338,7 @@ namespace ProjectService.Migrations
                     b.HasIndex("ProjectId", "ObjectiveCode")
                         .IsUnique();
 
-                    b.ToTable("project_objectives", (string)null);
+                    b.ToTable("project_objectives", "projectservice");
                 });
 
             modelBuilder.Entity("ProjectService.Models.Entities.ClassProject", b =>

@@ -17,6 +17,7 @@ namespace CommunicationService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("communicationservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -93,7 +94,7 @@ namespace CommunicationService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("channels", (string)null);
+                    b.ToTable("channels", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.ChannelMember", b =>
@@ -148,7 +149,7 @@ namespace CommunicationService.Migrations
                     b.HasIndex("ChannelId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("channel_members", (string)null);
+                    b.ToTable("channel_members", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.DirectMessage", b =>
@@ -215,7 +216,7 @@ namespace CommunicationService.Migrations
 
                     b.HasIndex("SenderId", "ReceiverId");
 
-                    b.ToTable("direct_messages", (string)null);
+                    b.ToTable("direct_messages", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.Meeting", b =>
@@ -300,7 +301,7 @@ namespace CommunicationService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("meetings", (string)null);
+                    b.ToTable("meetings", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.MeetingNote", b =>
@@ -345,7 +346,7 @@ namespace CommunicationService.Migrations
 
                     b.HasIndex("MeetingId");
 
-                    b.ToTable("meeting_notes", (string)null);
+                    b.ToTable("meeting_notes", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.MeetingParticipant", b =>
@@ -403,7 +404,7 @@ namespace CommunicationService.Migrations
                     b.HasIndex("MeetingId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("meeting_participants", (string)null);
+                    b.ToTable("meeting_participants", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.Message", b =>
@@ -472,7 +473,7 @@ namespace CommunicationService.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("messages", (string)null);
+                    b.ToTable("messages", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.MessageReaction", b =>
@@ -512,7 +513,7 @@ namespace CommunicationService.Migrations
                     b.HasIndex("MessageId", "UserId", "Emoji")
                         .IsUnique();
 
-                    b.ToTable("message_reactions", (string)null);
+                    b.ToTable("message_reactions", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.MessageRead", b =>
@@ -547,7 +548,7 @@ namespace CommunicationService.Migrations
                     b.HasIndex("MessageId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("message_reads", (string)null);
+                    b.ToTable("message_reads", "communicationservice");
                 });
 
             modelBuilder.Entity("CommunicationService.Models.Entities.ChannelMember", b =>

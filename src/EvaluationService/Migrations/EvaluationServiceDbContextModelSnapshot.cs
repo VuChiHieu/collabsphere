@@ -17,6 +17,7 @@ namespace EvaluationService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("evaluationservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -78,7 +79,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("checkpoint_evaluations", (string)null);
+                    b.ToTable("checkpoint_evaluations", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.EvaluationCriterion", b =>
@@ -139,7 +140,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("Order");
 
-                    b.ToTable("evaluation_criteria", (string)null);
+                    b.ToTable("evaluation_criteria", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.EvaluationTemplate", b =>
@@ -196,7 +197,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("IsPublic");
 
-                    b.ToTable("evaluation_templates", (string)null);
+                    b.ToTable("evaluation_templates", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.MemberEvaluation", b =>
@@ -257,7 +258,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("member_evaluations", (string)null);
+                    b.ToTable("member_evaluations", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.MilestoneAnswerEvaluation", b =>
@@ -313,7 +314,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("milestone_answer_evaluations", (string)null);
+                    b.ToTable("milestone_answer_evaluations", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.MilestoneAnswerPeerReview", b =>
@@ -359,7 +360,7 @@ namespace EvaluationService.Migrations
                     b.HasIndex("AnswerId", "ReviewerId")
                         .IsUnique();
 
-                    b.ToTable("milestone_answer_peer_reviews", (string)null);
+                    b.ToTable("milestone_answer_peer_reviews", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.PeerReview", b =>
@@ -433,7 +434,7 @@ namespace EvaluationService.Migrations
                     b.HasIndex("TeamId", "ReviewerId", "RevieweeId", "MilestoneId")
                         .IsUnique();
 
-                    b.ToTable("peer_reviews", (string)null);
+                    b.ToTable("peer_reviews", "evaluationservice");
                 });
 
             modelBuilder.Entity("EvaluationService.Models.Entities.TeamEvaluation", b =>
@@ -488,7 +489,7 @@ namespace EvaluationService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("team_evaluations", (string)null);
+                    b.ToTable("team_evaluations", "evaluationservice");
                 });
 #pragma warning restore 612, 618
         }

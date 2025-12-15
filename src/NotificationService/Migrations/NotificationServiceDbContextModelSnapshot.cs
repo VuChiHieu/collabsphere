@@ -17,6 +17,7 @@ namespace NotificationService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("notificationservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -92,7 +93,7 @@ namespace NotificationService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("email_notifications", (string)null);
+                    b.ToTable("email_notifications", "notificationservice");
                 });
 
             modelBuilder.Entity("NotificationService.Models.Entities.Notification", b =>
@@ -177,7 +178,7 @@ namespace NotificationService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("notifications", (string)null);
+                    b.ToTable("notifications", "notificationservice");
                 });
 
             modelBuilder.Entity("NotificationService.Models.Entities.NotificationPreference", b =>
@@ -247,7 +248,7 @@ namespace NotificationService.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("notification_preferences", (string)null);
+                    b.ToTable("notification_preferences", "notificationservice");
                 });
 
             modelBuilder.Entity("NotificationService.Models.Entities.NotificationQueue", b =>
@@ -316,7 +317,7 @@ namespace NotificationService.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("notification_queues", (string)null);
+                    b.ToTable("notification_queues", "notificationservice");
                 });
 
             modelBuilder.Entity("NotificationService.Models.Entities.UserDeviceToken", b =>
@@ -370,7 +371,7 @@ namespace NotificationService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("user_device_tokens", (string)null);
+                    b.ToTable("user_device_tokens", "notificationservice");
                 });
 #pragma warning restore 612, 618
         }

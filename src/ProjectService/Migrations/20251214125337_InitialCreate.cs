@@ -11,8 +11,12 @@ namespace ProjectService.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "projectservice");
+
             migrationBuilder.CreateTable(
                 name: "projects",
+                schema: "projectservice",
                 columns: table => new
                 {
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -47,6 +51,7 @@ namespace ProjectService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "class_projects",
+                schema: "projectservice",
                 columns: table => new
                 {
                     ClassProjectId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -66,6 +71,7 @@ namespace ProjectService.Migrations
                     table.ForeignKey(
                         name: "FK_class_projects_projects_ProjectId",
                         column: x => x.ProjectId,
+                        principalSchema: "projectservice",
                         principalTable: "projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
@@ -73,6 +79,7 @@ namespace ProjectService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "project_ai_generations",
+                schema: "projectservice",
                 columns: table => new
                 {
                     GenerationId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -91,6 +98,7 @@ namespace ProjectService.Migrations
                     table.ForeignKey(
                         name: "FK_project_ai_generations_projects_ProjectId",
                         column: x => x.ProjectId,
+                        principalSchema: "projectservice",
                         principalTable: "projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
@@ -98,6 +106,7 @@ namespace ProjectService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "project_milestones",
+                schema: "projectservice",
                 columns: table => new
                 {
                     MilestoneId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -120,6 +129,7 @@ namespace ProjectService.Migrations
                     table.ForeignKey(
                         name: "FK_project_milestones_projects_ProjectId",
                         column: x => x.ProjectId,
+                        principalSchema: "projectservice",
                         principalTable: "projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
@@ -127,6 +137,7 @@ namespace ProjectService.Migrations
 
             migrationBuilder.CreateTable(
                 name: "project_objectives",
+                schema: "projectservice",
                 columns: table => new
                 {
                     ObjectiveId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -146,6 +157,7 @@ namespace ProjectService.Migrations
                     table.ForeignKey(
                         name: "FK_project_objectives_projects_ProjectId",
                         column: x => x.ProjectId,
+                        principalSchema: "projectservice",
                         principalTable: "projects",
                         principalColumn: "ProjectId",
                         onDelete: ReferentialAction.Cascade);
@@ -153,80 +165,95 @@ namespace ProjectService.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_projects_ClassId",
+                schema: "projectservice",
                 table: "class_projects",
                 column: "ClassId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_projects_ClassId_ProjectId",
+                schema: "projectservice",
                 table: "class_projects",
                 columns: new[] { "ClassId", "ProjectId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_class_projects_ProjectId",
+                schema: "projectservice",
                 table: "class_projects",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_ai_generations_CreatedAt",
+                schema: "projectservice",
                 table: "project_ai_generations",
                 column: "CreatedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_ai_generations_ProjectId",
+                schema: "projectservice",
                 table: "project_ai_generations",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_milestones_Order",
+                schema: "projectservice",
                 table: "project_milestones",
                 column: "Order");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_milestones_ProjectId",
+                schema: "projectservice",
                 table: "project_milestones",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_milestones_ProjectId_MilestoneCode",
+                schema: "projectservice",
                 table: "project_milestones",
                 columns: new[] { "ProjectId", "MilestoneCode" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_objectives_ProjectId",
+                schema: "projectservice",
                 table: "project_objectives",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_project_objectives_ProjectId_ObjectiveCode",
+                schema: "projectservice",
                 table: "project_objectives",
                 columns: new[] { "ProjectId", "ObjectiveCode" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_CreatedBy",
+                schema: "projectservice",
                 table: "projects",
                 column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_ProjectCode",
+                schema: "projectservice",
                 table: "projects",
                 column: "ProjectCode",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_Status",
+                schema: "projectservice",
                 table: "projects",
                 column: "Status");
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_SubjectId",
+                schema: "projectservice",
                 table: "projects",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_projects_SyllabusId",
+                schema: "projectservice",
                 table: "projects",
                 column: "SyllabusId");
         }
@@ -235,19 +262,24 @@ namespace ProjectService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "class_projects");
+                name: "class_projects",
+                schema: "projectservice");
 
             migrationBuilder.DropTable(
-                name: "project_ai_generations");
+                name: "project_ai_generations",
+                schema: "projectservice");
 
             migrationBuilder.DropTable(
-                name: "project_milestones");
+                name: "project_milestones",
+                schema: "projectservice");
 
             migrationBuilder.DropTable(
-                name: "project_objectives");
+                name: "project_objectives",
+                schema: "projectservice");
 
             migrationBuilder.DropTable(
-                name: "projects");
+                name: "projects",
+                schema: "projectservice");
         }
     }
 }

@@ -12,7 +12,7 @@ using TeamService.Data;
 namespace TeamService.Migrations
 {
     [DbContext(typeof(TeamServiceDbContext))]
-    [Migration("20251214112632_InitialCreate")]
+    [Migration("20251214125350_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace TeamService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("teamservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -84,7 +85,7 @@ namespace TeamService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("checkpoints", (string)null);
+                    b.ToTable("checkpoints", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.CheckpointAssignment", b =>
@@ -134,7 +135,7 @@ namespace TeamService.Migrations
                     b.HasIndex("CheckpointId", "TeamMemberId")
                         .IsUnique();
 
-                    b.ToTable("checkpoint_assignments", (string)null);
+                    b.ToTable("checkpoint_assignments", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.CheckpointSubmission", b =>
@@ -186,7 +187,7 @@ namespace TeamService.Migrations
 
                     b.HasIndex("Version");
 
-                    b.ToTable("checkpoint_submissions", (string)null);
+                    b.ToTable("checkpoint_submissions", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.MilestoneAnswer", b =>
@@ -245,7 +246,7 @@ namespace TeamService.Migrations
                     b.HasIndex("QuestionId", "TeamMemberId")
                         .IsUnique();
 
-                    b.ToTable("milestone_answers", (string)null);
+                    b.ToTable("milestone_answers", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.MilestoneQuestion", b =>
@@ -296,7 +297,7 @@ namespace TeamService.Migrations
 
                     b.HasIndex("TeamMilestoneId");
 
-                    b.ToTable("milestone_questions", (string)null);
+                    b.ToTable("milestone_questions", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.Team", b =>
@@ -377,7 +378,7 @@ namespace TeamService.Migrations
 
                     b.HasIndex("TeamLeaderId");
 
-                    b.ToTable("teams", (string)null);
+                    b.ToTable("teams", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.TeamMember", b =>
@@ -441,7 +442,7 @@ namespace TeamService.Migrations
                     b.HasIndex("TeamId", "StudentId")
                         .IsUnique();
 
-                    b.ToTable("team_members", (string)null);
+                    b.ToTable("team_members", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.TeamMilestone", b =>
@@ -506,7 +507,7 @@ namespace TeamService.Migrations
                     b.HasIndex("TeamId", "ProjectMilestoneId")
                         .IsUnique();
 
-                    b.ToTable("team_milestones", (string)null);
+                    b.ToTable("team_milestones", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.TeamProgressLog", b =>
@@ -544,7 +545,7 @@ namespace TeamService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("team_progress_logs", (string)null);
+                    b.ToTable("team_progress_logs", "teamservice");
                 });
 
             modelBuilder.Entity("TeamService.Models.Entities.Checkpoint", b =>

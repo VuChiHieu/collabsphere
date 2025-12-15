@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CollaborationService.Migrations
 {
     [DbContext(typeof(CollaborationServiceDbContext))]
-    [Migration("20251214112650_InitialCreate")]
+    [Migration("20251214125406_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace CollaborationService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("collaborationservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -78,7 +79,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("activity_logs", (string)null);
+                    b.ToTable("activity_logs", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Board", b =>
@@ -131,7 +132,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("boards", (string)null);
+                    b.ToTable("boards", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Card", b =>
@@ -236,7 +237,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("cards", (string)null);
+                    b.ToTable("cards", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.CardAssignment", b =>
@@ -279,7 +280,7 @@ namespace CollaborationService.Migrations
                     b.HasIndex("CardId", "AssigneeId")
                         .IsUnique();
 
-                    b.ToTable("card_assignments", (string)null);
+                    b.ToTable("card_assignments", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.CardAttachment", b =>
@@ -333,7 +334,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("UploadedBy");
 
-                    b.ToTable("card_attachments", (string)null);
+                    b.ToTable("card_attachments", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.CardComment", b =>
@@ -378,7 +379,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("card_comments", (string)null);
+                    b.ToTable("card_comments", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Column", b =>
@@ -433,7 +434,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("Order");
 
-                    b.ToTable("columns", (string)null);
+                    b.ToTable("columns", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Sprint", b =>
@@ -500,7 +501,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("sprints", (string)null);
+                    b.ToTable("sprints", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Subtask", b =>
@@ -551,7 +552,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.ToTable("subtasks", (string)null);
+                    b.ToTable("subtasks", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Task", b =>
@@ -619,7 +620,7 @@ namespace CollaborationService.Migrations
 
                     b.HasIndex("Status");
 
-                    b.ToTable("tasks", (string)null);
+                    b.ToTable("tasks", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.TaskAssignment", b =>
@@ -662,7 +663,7 @@ namespace CollaborationService.Migrations
                     b.HasIndex("TaskId", "AssigneeId")
                         .IsUnique();
 
-                    b.ToTable("task_assignments", (string)null);
+                    b.ToTable("task_assignments", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.Workspace", b =>
@@ -716,7 +717,7 @@ namespace CollaborationService.Migrations
                     b.HasIndex("TeamId")
                         .IsUnique();
 
-                    b.ToTable("workspaces", (string)null);
+                    b.ToTable("workspaces", "collaborationservice");
                 });
 
             modelBuilder.Entity("CollaborationService.Models.Entities.ActivityLog", b =>

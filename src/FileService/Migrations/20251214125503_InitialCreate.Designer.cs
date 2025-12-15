@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FileService.Migrations
 {
     [DbContext(typeof(FileServiceDbContext))]
-    [Migration("20251214112740_InitialCreate")]
+    [Migration("20251214125503_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,6 +20,7 @@ namespace FileService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("fileservice")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -67,7 +68,7 @@ namespace FileService.Migrations
                     b.HasIndex("DocumentId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("document_collaborators", (string)null);
+                    b.ToTable("document_collaborators", "fileservice");
                 });
 
             modelBuilder.Entity("FileService.Models.Entities.Resource", b =>
@@ -158,7 +159,7 @@ namespace FileService.Migrations
 
                     b.HasIndex("Scope", "ScopeId");
 
-                    b.ToTable("resources", (string)null);
+                    b.ToTable("resources", "fileservice");
                 });
 
             modelBuilder.Entity("FileService.Models.Entities.ResourceAccess", b =>
@@ -209,7 +210,7 @@ namespace FileService.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("resource_accesses", (string)null);
+                    b.ToTable("resource_accesses", "fileservice");
                 });
 
             modelBuilder.Entity("FileService.Models.Entities.ResourceVersion", b =>
@@ -260,7 +261,7 @@ namespace FileService.Migrations
                     b.HasIndex("ResourceId", "VersionNumber")
                         .IsUnique();
 
-                    b.ToTable("resource_versions", (string)null);
+                    b.ToTable("resource_versions", "fileservice");
                 });
 
             modelBuilder.Entity("FileService.Models.Entities.SharedDocument", b =>
@@ -330,7 +331,7 @@ namespace FileService.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("shared_documents", (string)null);
+                    b.ToTable("shared_documents", "fileservice");
                 });
 
             modelBuilder.Entity("FileService.Models.Entities.DocumentCollaborator", b =>
